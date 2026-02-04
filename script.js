@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let memberCount = 1;
     const MAX_MEMBERS = 5;
     const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
-    const MIN_RESOLUTION = 2000;
+    const MIN_RESOLUTION = 1000;
 
     // Add team member functionality
     if (addMemberBtn) {
