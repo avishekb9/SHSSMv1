@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // GitHub API Configuration
-    const GITHUB_TOKEN = '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';
+    const GITHUB_TOKEN = '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';
     const GITHUB_REPO = 'avishekb9/SHSSMv1';
     const UPLOAD_PATH = 'logos';
 
