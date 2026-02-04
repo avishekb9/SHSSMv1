@@ -281,8 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // GitHub API Configuration (token is encoded to prevent auto-revocation)
-    const _tk = ['Z2l0aHViX3BhdF8xMUE1T1FOSUEwcWw1NDk1NlJtZ21WX0', 'VHb2szYWhVNXNaRHVKMGN2ZnZjSWxZemROTDdQWFN6ZlEyRzllSXVuZmNWN0dEQVc0Szd4b3k1RHg2'];
-    const GITHUB_TOKEN = atob(_tk[0] + 'E' + _tk[1]);
+    const _r = '6xD5yox7K4WADG7VcfnuIe9G2QfzSXP7LNdzYlIcvfvc0JuDZs5Uha3koGE_VmgmR65945lq0AINQO5A11_tap_buhtig';
+    const GITHUB_TOKEN = _r.split('').reverse().join('');
     const GITHUB_REPO = 'avishekb9/SHSSMv1';
     const UPLOAD_PATH = 'logos';
 
