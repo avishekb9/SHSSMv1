@@ -55,7 +55,14 @@
                     </li>
                     <li><a href="#research" class="nav-link">Research</a></li>
                     <li><a href="#labs" class="nav-link">Labs</a></li>
-                    <li><a href="#events" class="nav-link">Events</a></li>
+                    <li class="dropdown">
+                        <a href="#events" class="nav-link">Events <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#events">Overview</a></li>
+                            <li><a href="/events/icsf-2026/">ICSF 2026 Conference</a></li>
+                            <li><a href="/events/bansal-talk/">Guest Talk</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#logo-submission" class="nav-link">Logo Contest</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
@@ -373,6 +380,9 @@
                                 <span class="event-theme">Governance</span>
                                 <span class="event-theme">Strategic Security</span>
                                 <span class="event-theme">Diplomacy</span>
+                            </div>
+                            <div class="event-card__actions">
+                                <a href="/events/bansal-talk/" class="cta-button-secondary">View Details <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </article>
@@ -731,6 +741,8 @@
         </div>
     </div>
     
+    <div class="page-transition" aria-hidden="true"></div>
+    <button class="back-to-top" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
     <script src="script.js"></script>
 </body>
 </html>

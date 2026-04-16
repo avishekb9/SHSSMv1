@@ -1060,6 +1060,39 @@ section { padding: 6rem 0; }
 }
 .footer-copy { color: var(--color-text-light); margin: 0; font-size: 0.85rem; opacity: 0.75; }
 
+/* --- NAVBAR SHRINK ON SCROLL --- */
+.navbar { transition: height 0.35s ease, box-shadow 0.35s ease; }
+.navbar.scrolled { height: 65px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
+.navbar.scrolled .nav-brand-emblem { width: 40px; height: 40px; }
+.navbar.scrolled .nav-brand-title { font-size: 1.35rem; }
+
+/* --- BACK TO TOP --- */
+.back-to-top {
+    position: fixed; bottom: 2rem; right: 2rem;
+    width: 46px; height: 46px; border-radius: 50%; border: none;
+    background: var(--color-primary); color: #fff;
+    cursor: pointer; opacity: 0; visibility: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 900; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 51, 102, 0.25); font-size: 1rem;
+}
+.back-to-top.visible { opacity: 1; visibility: visible; }
+.back-to-top:hover { background: var(--color-accent); transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0, 51, 102, 0.3); }
+
+/* --- PAGE TRANSITION --- */
+.page-transition {
+    position: fixed; inset: 0; z-index: 10001;
+    background: var(--color-primary-deep);
+    transform: scaleY(0); transform-origin: bottom;
+    transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+    pointer-events: none;
+}
+.page-transition.active { transform: scaleY(1); transform-origin: top; }
+
+/* --- STAGGER GRID ANIMATIONS --- */
+.stagger-child { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.stagger-child.stagger-visible { opacity: 1; transform: translateY(0); }
+
 /* --- SCROLL ANIMATIONS & RESPONSIVENESS --- */
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -1069,6 +1102,8 @@ section { padding: 6rem 0; }
     .nav-toggle { display: block; }
     .nav-menu--active { display: flex; flex-direction: column; position: absolute; top: var(--header-height); left: 0; width: 100%; background: white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); padding: 1rem 0; gap: 0; }
     .nav-menu--active .nav-link { padding: 1rem 2rem; width: 100%; }
+    .nav-menu--active .dropdown .dropdown-menu { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; margin-top: 0; padding-left: 1rem; background: var(--color-background-light); display: none; }
+    .nav-menu--active .dropdown.open .dropdown-menu { display: block; }
     .scholar-list { column-count: 2; }
     .scholar-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 }

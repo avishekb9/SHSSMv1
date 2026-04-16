@@ -1,17 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- CINEMATIC PRELOADER ---
+    // --- CINEMATIC PRELOADER (skip on revisit) ---
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        const preloaderTextSpans = document.querySelectorAll('.preloader-text span');
-        window.addEventListener('load', () => {
-            let delay = 0;
-            preloaderTextSpans.forEach(span => {
-                span.style.animationDelay = `${delay}s`;
-                delay += 0.05;
+        if (sessionStorage.getItem('shssm-visited')) {
+            preloader.classList.add('fade-out');
+            preloader.style.display = 'none';
+        } else {
+            const preloaderTextSpans = document.querySelectorAll('.preloader-text span');
+            window.addEventListener('load', () => {
+                sessionStorage.setItem('shssm-visited', 'true');
+                let delay = 0;
+                preloaderTextSpans.forEach(span => {
+                    span.style.animationDelay = `${delay}s`;
+                    delay += 0.05;
+                });
+                setTimeout(() => preloader.classList.add('fade-out'), 3000);
+                setTimeout(() => preloader.style.display = 'none', 3800);
             });
-            setTimeout(() => preloader.classList.add('fade-out'), 3000);
-            setTimeout(() => preloader.style.display = 'none', 3800);
-        });
+        }
     }
 
     // --- ENHANCED MOBILE NAVIGATION ---
@@ -129,6 +135,79 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.1 });
     revealElements.forEach(el => observer.observe(el));
+
+    // --- NAVBAR SHRINK ON SCROLL ---
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        }, { passive: true });
+    }
+
+    // --- SCROLL-SPY FOR ACTIVE NAV LINK ---
+    const spySections = document.querySelectorAll('main section[id]');
+    const navLinksAll = document.querySelectorAll('.nav-link');
+    if (spySections.length) {
+        window.addEventListener('scroll', () => {
+            let current = '';
+            spySections.forEach(sec => {
+                if (window.pageYOffset >= sec.offsetTop - 120) current = sec.getAttribute('id');
+            });
+            navLinksAll.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === `#${current}` || (current === 'home' && href === '#home')) link.classList.add('active');
+            });
+        }, { passive: true });
+    }
+
+    // --- BACK TO TOP ---
+    const backToTop = document.querySelector('.back-to-top');
+    if (backToTop) {
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 500);
+        }, { passive: true });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    // --- MOBILE DROPDOWN TOGGLE ---
+    document.querySelectorAll('.dropdown').forEach(dd => {
+        const trigger = dd.querySelector('.nav-link');
+        if (!trigger) return;
+        trigger.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992) {
+                e.preventDefault();
+                dd.classList.toggle('open');
+            }
+        });
+    });
+
+    // --- PAGE TRANSITION FOR EVENT LINKS ---
+    const pageOverlay = document.querySelector('.page-transition');
+    document.querySelectorAll('a[href^="/events/"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            if (!pageOverlay) return;
+            e.preventDefault();
+            const target = link.href;
+            pageOverlay.classList.add('active');
+            setTimeout(() => { window.location.href = target; }, 450);
+        });
+    });
+
+    // --- STAGGER GRID ANIMATIONS ---
+    const staggerContainers = document.querySelectorAll('.research-grid, .labs-grid, .discipline-grid, .events-showcase, .competition-info');
+    const staggerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                Array.from(entry.target.children).forEach((child, i) => {
+                    child.classList.add('stagger-child');
+                    setTimeout(() => child.classList.add('stagger-visible'), i * 100);
+                });
+                staggerObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+    staggerContainers.forEach(el => staggerObserver.observe(el));
 
     // --- LOGO SUBMISSION FORM FUNCTIONALITY ---
     const logoForm = document.getElementById('logo-submission-form');
