@@ -280,38 +280,33 @@ document.addEventListener('DOMContentLoaded', () => {
         formMessage.style.display = 'none';
     }
 
-    // GitHub API Configuration (token is encoded to prevent auto-revocation)
-    const _r = '6xD5yox7K4WADG7VcfnuIe9G2QfzSXP7LNdzYlIcvfvc0JuDZs5Uha3koGE_VmgmR65945lq0AINQO5A11_tap_buhtig';
-    const GITHUB_TOKEN = _r.split('').reverse().join('');
-    const GITHUB_REPO = 'avishekb9/SHSSMv1';
-    const UPLOAD_PATH = 'logos';
+    // SHSSM form backend (Cloud Run)
+    const API_BASE = (window.SHSSM_API_BASE || 'https://shssm-form-api-672903689767.asia-south1.run.app').replace(/\/$/, '');
+    const SUBMISSION_ENDPOINT = `${API_BASE}/api/logo-submission`;
 
-    // Convert file to base64
-    function fileToBase64(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                // Remove the data URL prefix (e.g., "data:image/png;base64,")
-                const base64 = reader.result.split(',')[1];
-                resolve(base64);
-            };
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
+    async function submitLogo(file, teamName, members, email, concept) {
+        const fd = new FormData();
+        fd.append('team_name', teamName);
+        fd.append('team_email', email);
+        fd.append('design_concept', concept || '');
+        fd.append('terms_agree', 'true');
+        members.forEach((m, i) => {
+            const idx = i + 1;
+            fd.append(`member_${idx}_name`, m.name);
+            fd.append(`member_${idx}_discipline`, m.discipline || '');
+            fd.append(`member_${idx}_roll`, m.roll || '');
         });
+        fd.append('logo_file', file, file.name);
+
+        const res = await fetch(SUBMISSION_ENDPOINT, { method: 'POST', body: fd });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.ok === false) {
+            const msg = (data.errors && data.errors.join('; ')) || data.error || `Upload failed (HTTP ${res.status})`;
+            throw new Error(msg);
+        }
+        return data;
     }
 
-    // Generate safe filename
-    function generateFilename(teamName, originalName) {
-        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        const safeName = teamName.toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-|-$/g, '')
-            .substring(0, 30);
-        const extension = originalName.split('.').pop().toLowerCase();
-        return `${safeName}_${timestamp}.${extension}`;
-    }
-
-    // Collect team members data
     function collectMembersData() {
         const members = [];
         const entries = membersContainer.querySelectorAll('.member-entry');
@@ -319,58 +314,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = entry.querySelector(`input[name="member_${index + 1}_name"]`)?.value || '';
             const discipline = entry.querySelector(`select[name="member_${index + 1}_discipline"]`)?.value || '';
             const roll = entry.querySelector(`input[name="member_${index + 1}_roll"]`)?.value || '';
-            if (name) {
-                members.push({ name, discipline, roll });
-            }
+            if (name) members.push({ name, discipline, roll });
         });
         return members;
     }
 
-    // Upload to GitHub
-    async function uploadToGitHub(file, teamName, members, email, concept) {
-        const filename = generateFilename(teamName, file.name);
-        const base64Content = await fileToBase64(file);
-
-        // Create commit message with metadata
-        const membersList = members.map(m => `  - ${m.name} (${m.discipline}${m.roll ? ', ' + m.roll : ''})`).join('\n');
-        const commitMessage = `Logo submission: ${teamName}
-
-Team: ${teamName}
-Contact: ${email}
-Members:
-${membersList}
-${concept ? '\nConcept: ' + concept.substring(0, 200) : ''}
-
-Submitted: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST`;
-
-        const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${UPLOAD_PATH}/${filename}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${GITHUB_TOKEN}`,
-                'Content-Type': 'application/json',
-                'Accept': 'application/vnd.github.v3+json'
-            },
-            body: JSON.stringify({
-                message: commitMessage,
-                content: base64Content
-            })
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Upload failed');
-        }
-
-        return await response.json();
-    }
-
-    // Form submission
     if (logoForm) {
         logoForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             hideMessage();
 
-            // Validate file is selected
             if (!logoFileInput.files.length) {
                 showMessage('Please upload your logo file.', 'error');
                 return;
@@ -378,8 +331,6 @@ Submitted: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} I
 
             const btnText = submitBtn.querySelector('.btn-text');
             const btnLoading = submitBtn.querySelector('.btn-loading');
-
-            // Show loading state
             btnText.style.display = 'none';
             btnLoading.style.display = 'inline';
             submitBtn.disabled = true;
@@ -391,18 +342,15 @@ Submitted: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} I
                 const concept = document.getElementById('design-concept').value;
                 const members = collectMembersData();
 
-                // Upload to GitHub
-                await uploadToGitHub(file, teamName, members, email, concept);
+                await submitLogo(file, teamName, members, email, concept);
 
                 showMessage('Your logo has been submitted successfully! Thank you for participating in the SHSSM Logo Design Competition.', 'success');
 
-                // Reset form
                 logoForm.reset();
                 filePreview.style.display = 'none';
                 fileUploadArea.style.display = 'block';
                 previewImage.src = '';
 
-                // Reset members
                 while (membersContainer.children.length > 1) {
                     membersContainer.lastChild.remove();
                 }

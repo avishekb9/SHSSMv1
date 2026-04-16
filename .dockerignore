@@ -1,0 +1,17 @@
+.git
+.gitignore
+.claude
+node_modules
+firebase-debug.log
+firebase-debug.*.log
+__*.html
+downloaded-logos
+moodboards
+logo-contest-email*
+assets
+*.md
+.dockerignore
+.firebaserc
+firebase.json
+backend
+/tmp
