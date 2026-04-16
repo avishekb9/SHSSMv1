@@ -93,6 +93,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- SCHOLAR DISCIPLINE FILTER ---
+    document.querySelectorAll('.scholar-filters').forEach(filterNav => {
+        const container = filterNav.nextElementSibling;
+        if (!container || !container.hasAttribute('data-scholar-container')) return;
+        const items = container.querySelectorAll('.scholar-item');
+        const pills = filterNav.querySelectorAll('.scholar-pill');
+
+        pills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                const filter = pill.dataset.filter;
+                pills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+
+                items.forEach(item => {
+                    const match = filter === 'all' || item.dataset.discipline === filter;
+                    if (match) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    });
+
     // --- SCROLL-TRIGGERED FADE-IN ANIMATION ---
     const revealElements = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
