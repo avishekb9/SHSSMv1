@@ -55,18 +55,31 @@
 .theme-card h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
 .theme-card p { font-size: 0.9rem; text-align: center; margin-bottom: 0; }
 
-/* Convener card */
-.convener-card {
-    max-width: 600px; margin: 0 auto; padding: 2.5rem; background: var(--color-background-white);
-    border: 1px solid var(--border-light); border-left: 4px solid var(--event-green); border-radius: 8px; text-align: center;
+/* Convener grid */
+.convener-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem; margin-bottom: 2rem;
 }
-.convener-info h3 { font-size: 1.6rem; margin-bottom: 0.3rem; }
-.convener-role { color: var(--color-text-secondary); margin-bottom: 1rem; }
-.convener-org { color: var(--event-green); font-weight: 600; margin-bottom: 0.75rem; }
-.convener-org i { margin-right: 0.4rem; }
-.convener-email { color: var(--color-accent); text-decoration: none; font-weight: 600; }
-.convener-email:hover { text-decoration: underline; }
-.convener-email i { margin-right: 0.3rem; }
+.convener-card {
+    padding: 1.8rem; background: var(--color-background-white);
+    border: 1px solid var(--border-light); border-top: 3px solid var(--event-green);
+    border-radius: 8px; text-align: center; transition: all 0.3s ease;
+}
+.convener-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+.convener-card--patron { border-top-color: var(--color-gold); grid-column: 1 / -1; }
+.convener-label {
+    display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--event-green); margin-bottom: 0.6rem;
+}
+.convener-card--patron .convener-label { color: var(--color-gold); }
+.convener-card h3 { font-size: 1.2rem; margin-bottom: 0.25rem; }
+.convener-role { color: var(--color-text-secondary); font-size: 0.88rem; margin-bottom: 0; }
+.convener-org-line {
+    text-align: center; color: var(--color-text-secondary); font-size: 0.9rem;
+}
+.convener-org-line i { color: var(--event-green); margin-right: 0.4rem; }
+.convener-org-line a { color: var(--event-green); font-weight: 600; text-decoration: none; }
+.convener-org-line a:hover { text-decoration: underline; }
 
 /* Venue card */
 .venue-card { max-width: 700px; margin: 0 auto; padding: 2.5rem; background: var(--color-background-white); border: 1px solid var(--border-light); border-radius: 8px; text-align: center; }
