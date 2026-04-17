@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=794, initial-scale=1">
+<title>ICSF 2026 Flyer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+@page { size: A4 portrait; margin: 0; }
+body {
+    width: 794px; height: 1123px;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    background: linear-gradient(170deg, #071a12 0%, #0d3321 30%, #0a2a1a 60%, #061510 100%);
+    position: relative; overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+/* Ambient decoration */
+body::before, body::after {
+    content: ''; position: absolute; border-radius: 50%; border: 1px solid rgba(46, 125, 50, 0.12); pointer-events: none;
+}
+body::before { width: 900px; height: 900px; top: -200px; right: -300px; }
+body::after { width: 600px; height: 600px; bottom: -100px; left: -200px; border-color: rgba(212, 165, 71, 0.08); }
+
+.flyer { width: 100%; height: 100%; padding: 48px 56px; display: flex; flex-direction: column; position: relative; z-index: 1; }
+
+/* Top bar */
+.top-bar { height: 4px; background: linear-gradient(90deg, #2e7d32, #4FC3F7, #d4a547); position: absolute; top: 0; left: 0; right: 0; z-index: 2; }
+
+/* Logo row */
+.logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+.logo-item { display: flex; align-items: center; gap: 12px; }
+.logo-item img { height: 64px; object-fit: contain; }
+.logo-text { display: flex; flex-direction: column; }
+.logo-text .name { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 600; color: #fff; line-height: 1.2; }
+.logo-text .sub { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(46, 125, 50, 0.4), transparent); margin: 8px 0 28px; }
+
+/* Hero */
+.hero { text-align: center; margin-bottom: 28px; }
+.badge { display: inline-block; padding: 6px 20px; border-radius: 20px; background: #2e7d32; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; line-height: 1.2; margin-bottom: 8px; color: #fff; }
+.hero .acronym { font-size: 18px; letter-spacing: 10px; color: rgba(255,255,255,0.35); font-weight: 300; margin-bottom: 20px; }
+.hero .dates { font-size: 22px; font-weight: 600; color: #4FC3F7; margin-bottom: 4px; }
+.hero .venue { font-size: 14px; color: rgba(255,255,255,0.6); }
+
+/* Themes */
+.themes { margin-bottom: 24px; }
+.themes-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #2e7d32; margin-bottom: 12px; text-align: center; font-weight: 700; }
+.themes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.theme-item {
+    display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(46, 125, 50, 0.2);
+    border-radius: 8px;
+}
+.theme-item i { color: #2e7d32; font-size: 16px; flex-shrink: 0; }
+.theme-item span { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.85); }
+
+/* Description */
+.desc { text-align: center; font-size: 12.5px; line-height: 1.8; color: rgba(255,255,255,0.6); max-width: 620px; margin: 0 auto 24px; font-weight: 300; }
+
+/* Committee */
+.committee { margin-bottom: 24px; }
+.committee-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #d4a547; margin-bottom: 14px; text-align: center; font-weight: 700; }
+.committee-grid { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.committee-card {
+    padding: 10px 16px; border-radius: 8px; text-align: center;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 165, 71, 0.15);
+    min-width: 150px;
+}
+.committee-card.patron { border-color: rgba(212, 165, 71, 0.35); }
+.committee-card .role { font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: #d4a547; margin-bottom: 4px; font-weight: 600; }
+.committee-card.patron .role { color: #d4a547; }
+.committee-card .cname { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 600; color: #fff; }
+.committee-card .affil { font-size: 9px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+/* CTA strip */
+.cta-strip {
+    display: flex; justify-content: center; align-items: center; gap: 32px;
+    padding: 16px 0; margin-bottom: 20px;
+    border-top: 1px solid rgba(46, 125, 50, 0.2);
+    border-bottom: 1px solid rgba(46, 125, 50, 0.2);
+}
+.cta-item { text-align: center; }
+.cta-item .label { font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; font-weight: 600; }
+.cta-item .value { font-size: 13px; color: #4FC3F7; font-weight: 600; }
+
+/* Footer */
+.flyer-footer { margin-top: auto; text-align: center; }
+.org-line { font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 6px; }
+.org-name { color: #2e7d32; font-weight: 600; }
+.tagline { font-family: 'Playfair Display', serif; font-style: italic; font-size: 13px; color: rgba(255,255,255,0.3); }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="flyer">
+    <div class="logos">
+        <div class="logo-item">
+            <img src="iitbbs-crest.png" alt="IIT Bhubaneswar">
+            <div class="logo-text">
+                <span class="name">IIT Bhubaneswar</span>
+                <span class="sub">School of HSSM</span>
+            </div>
+        </div>
+        <div class="logo-item">
+            <div class="logo-text" style="text-align:right">
+                <span class="name">SHSSM</span>
+                <span class="sub">Est. 2008</span>
+            </div>
+            <img src="../assets/shssm-emblem-256.png" alt="SHSSM">
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="hero">
+        <div class="badge"><i class="fas fa-globe-americas"></i> &nbsp;2nd International Conference</div>
+        <h1>Sustainable Finance<br>&amp; Circular Economy</h1>
+        <p class="acronym">ICSF 2026</p>
+        <p class="dates"><i class="fas fa-calendar-alt"></i> &nbsp;04 &ndash; 06 December 2026</p>
+        <p class="venue"><i class="fas fa-map-marker-alt"></i> &nbsp;IIT Bhubaneswar, Argul Campus, Odisha, India</p>
+    </div>
+
+    <div class="themes">
+        <p class="themes-label">Conference Themes</p>
+        <div class="themes-grid">
+            <div class="theme-item"><i class="fas fa-chart-pie"></i><span>Core Sustainable Finance</span></div>
+            <div class="theme-item"><i class="fas fa-recycle"></i><span>Circular Economy &amp; Entrepreneurship</span></div>
+            <div class="theme-item"><i class="fas fa-leaf"></i><span>ESG &amp; Green Bonds</span></div>
+            <div class="theme-item"><i class="fas fa-globe"></i><span>Climate-Aligned Economics</span></div>
+        </div>
+    </div>
+
+    <p class="desc">A three-day gathering of researchers, regulators and practitioners exploring finance management, derivatives, ESG frameworks and green instruments &mdash; through keynotes, panel discussions and interactive workshops.</p>
+
+    <div class="committee">
+        <p class="committee-label">Organising Committee</p>
+        <div class="committee-grid">
+            <div class="committee-card patron">
+                <p class="role">Chief Patron</p>
+                <p class="cname">Prof. Shreepad Karmalkar</p>
+                <p class="affil">Director, IIT Bhubaneswar</p>
+            </div>
+            <div class="committee-card">
+                <p class="role">Convener</p>
+                <p class="cname">Dr. N.C. Sahu</p>
+                <p class="affil">Associate Professor</p>
+            </div>
+            <div class="committee-card">
+                <p class="role">Convener</p>
+                <p class="cname">Dr. A.K. Rath</p>
+                <p class="affil">Associate Professor</p>
+            </div>
+            <div class="committee-card">
+                <p class="role">Co-Convener</p>
+                <p class="cname">Dr. A. Bhandari</p>
+                <p class="affil">Assistant Professor</p>
+            </div>
+            <div class="committee-card">
+                <p class="role">Co-Convener</p>
+                <p class="cname">Dr. S. Basel</p>
+                <p class="affil">Assistant Professor</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-strip">
+        <div class="cta-item">
+            <p class="label">Conference Website</p>
+            <p class="value">ssfineco.com/icsf</p>
+        </div>
+        <div class="cta-item">
+            <p class="label">Registration</p>
+            <p class="value">conference.iitbbs.ac.in/icsf</p>
+        </div>
+        <div class="cta-item">
+            <p class="label">Contact</p>
+            <p class="value">secretary@ssfineco.com</p>
+        </div>
+    </div>
+
+    <div class="flyer-footer">
+        <p class="org-line">Organised by <span class="org-name">SSFE &mdash; Society for Sustainable Finance &amp; Economics</span></p>
+        <p class="tagline">Shaping sustainable finance for resilient economies</p>
+    </div>
+</div>
+</body>
+</html>
