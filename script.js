@@ -22,11 +22,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- ENHANCED MOBILE NAVIGATION ---
     const navToggle = document.querySelector('.nav-toggle');
+    const navbarEl = document.querySelector('.navbar');
     const mainNav = document.querySelector('.nav-menu');
-    if (navToggle && mainNav) {
+
+    function closeMobileMenu() {
+        if (!navbarEl) return;
+        navbarEl.classList.remove('menu-open');
+        if (navToggle) {
+            navToggle.setAttribute('aria-expanded', 'false');
+            const icon = navToggle.querySelector('i');
+            if (icon) { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); }
+        }
+        // Close any open dropdowns
+        document.querySelectorAll('.dropdown.open').forEach(dd => dd.classList.remove('open'));
+    }
+
+    if (navToggle && navbarEl) {
         navToggle.addEventListener('click', () => {
-            mainNav.classList.toggle('nav-menu--active');
+            const isOpen = navbarEl.classList.toggle('menu-open');
+            navToggle.setAttribute('aria-expanded', String(isOpen));
+            const icon = navToggle.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-bars', !isOpen);
+                icon.classList.toggle('fa-times', isOpen);
+            }
         });
+
+        // Close menu when a nav link is clicked
+        document.querySelectorAll('.nav-menu .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 992) closeMobileMenu();
+            });
+        });
+
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (navbarEl.classList.contains('menu-open') && !navbarEl.contains(e.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close on resize above breakpoint
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992) closeMobileMenu();
+        }, { passive: true });
     }
 
     // --- DYNAMIC MODAL LOGIC FOR FACULTY ---
@@ -92,9 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (tabId && peopleTabsContainer) {
                 activateTab(peopleTabsContainer, tabId);
                 // Close mobile menu if open
-                if (mainNav.classList.contains('nav-menu--active')) {
-                    mainNav.classList.remove('nav-menu--active');
-                }
+                closeMobileMenu();
             }
         });
     });
@@ -175,8 +212,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const trigger = dd.querySelector('.nav-link');
         if (!trigger) return;
         trigger.addEventListener('click', (e) => {
-            if (window.innerWidth <= 992) {
+            if (window.innerWidth <= 992 && navbarEl && navbarEl.classList.contains('menu-open')) {
                 e.preventDefault();
+                // Close sibling dropdowns
+                document.querySelectorAll('.dropdown.open').forEach(other => {
+                    if (other !== dd) other.classList.remove('open');
+                });
                 dd.classList.toggle('open');
             }
         });
