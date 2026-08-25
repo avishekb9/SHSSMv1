@@ -10,8 +10,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Backend dependencies
-backend/node_modules/
+# Dependencies
 node_modules/
 
 # Temp test files
