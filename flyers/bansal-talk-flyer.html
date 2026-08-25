@@ -32,7 +32,7 @@ body {
     background: linear-gradient(180deg, transparent, #d4a547, #4FC3F7, #d4a547, transparent);
 }
 
-.flyer { width: 100%; height: 100%; padding: 48px 56px 48px 80px; display: flex; flex-direction: column; position: relative; z-index: 2; }
+.flyer { width: 100%; height: 100%; padding: 40px 52px 36px 76px; display: flex; flex-direction: column; position: relative; z-index: 2; }
 
 /* Logo row */
 .logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
@@ -49,10 +49,10 @@ body {
 .badge { display: inline-block; padding: 8px 24px; border-radius: 4px; background: #003366; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
 
 /* Title */
-.talk-title { margin-bottom: 32px; }
+.talk-title { margin-bottom: 22px; }
 .talk-title h1 {
-    font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700;
-    font-style: italic; line-height: 1.15; color: #003366; margin-bottom: 8px;
+    font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700;
+    font-style: italic; line-height: 1.15; color: #003366; margin-bottom: 6px;
 }
 .talk-title .subtitle {
     font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic;
@@ -61,7 +61,7 @@ body {
 
 /* Speaker card */
 .speaker {
-    display: flex; gap: 24px; padding: 28px; margin-bottom: 28px;
+    display: flex; gap: 20px; padding: 20px; margin-bottom: 18px;
     background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
     border: 1px solid #e8e8e8; border-left: 5px solid #d4a547;
     border-radius: 8px;
@@ -76,7 +76,7 @@ body {
 .speaker-bio { font-size: 11.5px; line-height: 1.7; color: #555; }
 
 /* Accolades */
-.accolades { display: flex; gap: 16px; margin-bottom: 28px; }
+.accolades { display: flex; gap: 12px; margin-bottom: 18px; }
 .accolade-item {
     flex: 1; display: flex; align-items: center; gap: 10px;
     padding: 12px 16px; background: #f4f8f9; border-radius: 6px;
@@ -87,13 +87,13 @@ body {
 .accolade-item .text span { font-size: 9px; color: #888; }
 
 /* Abstract */
-.abstract { margin-bottom: 24px; }
+.abstract { margin-bottom: 14px; }
 .abstract-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #003366; margin-bottom: 12px; font-weight: 700; }
 .quote {
-    font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic;
-    line-height: 1.6; color: #003366; padding: 16px 20px;
+    font-family: 'Playfair Display', serif; font-size: 14px; font-style: italic;
+    line-height: 1.6; color: #003366; padding: 12px 16px;
     border-left: 3px solid #d4a547; background: rgba(212, 165, 71, 0.06);
-    border-radius: 0 6px 6px 0; margin-bottom: 12px;
+    border-radius: 0 6px 6px 0; margin-bottom: 8px;
 }
 .abstract p { font-size: 12px; line-height: 1.7; color: #555; }
 
@@ -108,17 +108,37 @@ body {
 }
 .topic-pill i { font-size: 11px; color: #4FC3F7; }
 
+/* Event date/venue strip */
+.event-strip {
+    display: flex; gap: 16px; margin-bottom: 20px;
+    padding: 14px 0; border-top: 1px solid #e0e4e8; border-bottom: 1px solid #e0e4e8;
+}
+.event-strip-item { flex: 1; display: flex; align-items: center; gap: 10px; }
+.event-strip-item i { font-size: 18px; color: #003366; flex-shrink: 0; }
+.event-strip-item strong { display: block; font-size: 11px; color: #003366; }
+.event-strip-item span { display: block; font-size: 9px; color: #888; }
+
+/* CTA button */
+.cta-row { text-align: center; margin-bottom: 16px; }
+.flyer-cta {
+    display: inline-block; padding: 12px 32px;
+    background: #003366; color: #fff; text-decoration: none;
+    font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    border-radius: 6px; transition: background 0.3s;
+}
+.flyer-cta:hover { background: #4FC3F7; }
+.flyer-cta i { font-size: 11px; }
+.cta-url { display: block; margin-top: 6px; font-size: 8.5px; color: #4FC3F7; letter-spacing: 0.5px; word-break: break-all; }
+
 /* Footer */
 .flyer-footer {
-    margin-top: auto; padding-top: 20px;
+    margin-top: auto; padding-top: 14px;
     border-top: 1px solid #e0e4e8;
     display: flex; justify-content: space-between; align-items: center;
 }
-.footer-left { font-size: 10px; color: #888; }
-.footer-left strong { color: #003366; }
+.footer-left .school, .footer-right .school { font-family: 'Playfair Display', serif; font-size: 12px; color: #003366; font-weight: 600; margin: 0; }
+.footer-left .inst, .footer-right .inst { font-size: 9px; color: #888; letter-spacing: 1px; margin: 0; }
 .footer-right { text-align: right; }
-.footer-right .school { font-family: 'Playfair Display', serif; font-size: 12px; color: #003366; font-weight: 600; }
-.footer-right .inst { font-size: 9px; color: #888; letter-spacing: 1px; }
 </style>
 </head>
 <body>
@@ -195,14 +215,36 @@ body {
         </div>
     </div>
 
+    <div class="event-strip">
+        <div class="event-strip-item">
+            <i class="fas fa-calendar-alt"></i>
+            <div><strong>Date to be announced</strong><span>Stay tuned for updates</span></div>
+        </div>
+        <div class="event-strip-item">
+            <i class="fas fa-university"></i>
+            <div><strong>Argul Campus, Bhubaneswar</strong><span>IIT Bhubaneswar</span></div>
+        </div>
+        <div class="event-strip-item">
+            <i class="fas fa-clock"></i>
+            <div><strong>Interactive Session</strong><span>Talk + Q&amp;A with students</span></div>
+        </div>
+    </div>
+
+    <div class="cta-row">
+        <a href="https://avishekb9.github.io/SHSSMv1/events/bansal-talk/" class="flyer-cta">
+            <i class="fas fa-globe"></i> &nbsp;View Event Details Online &nbsp;<i class="fas fa-arrow-right"></i>
+        </a>
+        <span class="cta-url">avishekb9.github.io/SHSSMv1/events/bansal-talk</span>
+    </div>
+
     <div class="flyer-footer">
         <div class="footer-left">
-            <strong><i class="fas fa-university"></i> &nbsp;Argul Campus, Bhubaneswar</strong><br>
-            <i class="fas fa-clock"></i> Interactive Session with Q&amp;A
-        </div>
-        <div class="footer-right">
             <p class="school">School of Humanities, Social Sciences &amp; Management</p>
             <p class="inst">IIT Bhubaneswar</p>
+        </div>
+        <div class="footer-right">
+            <p class="school">SHSSM</p>
+            <p class="inst">Knowledge &middot; Empathy &middot; Innovation</p>
         </div>
     </div>
 </div>
