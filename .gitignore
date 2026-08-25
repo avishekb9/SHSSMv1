@@ -34,3 +34,6 @@ Thumbs.db
 # Build artifacts
 dist/
 build/
+
+# Handover bundle (generated; rebuild from the repo)
+shssm-handover.zip
